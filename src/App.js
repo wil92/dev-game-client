@@ -2,19 +2,26 @@ import React from 'react';
 import './App.css';
 
 const URL = "ws://localhost:3002";
+const API = "http://localhost:3001/game/field";
 
 class App extends React.Component {
-    ws = new WebSocket(URL);
-
     rowSize = 8;
 
     players = [];
     field = [];
 
     componentDidMount() {
+        this.connectWebSocket();
+    }
+
+    connectWebSocket() {
+        this.ws = new WebSocket(URL);
+
         this.ws.onopen = () => {
             console.log('connected');
-        }
+            clearInterval(this.timerId);
+            this.fetchField();
+        };
 
         this.ws.onmessage = evt => {
             try {
@@ -23,9 +30,21 @@ class App extends React.Component {
             } catch (er) {
                 console.log(er);
             }
-        }
+        };
 
-        fetch('http://localhost:3000/game/field')
+        this.ws.onerror = () => this.ws.close();
+
+        this.ws.onclose = () => {
+            this.timerId = setInterval(() => {
+                this.ws.close();
+                this.connectWebSocket();
+                console.log('connecting');
+            }, 3000);
+        };
+    }
+
+    fetchField() {
+        fetch(API)
             .then(res => res.json())
             .then((data) => {
                 if (data) {
@@ -49,7 +68,6 @@ class App extends React.Component {
         this.players.forEach(player => {
             this.context.fillStyle = player.color;
             const xpos = player.position.x * this.rowSize, ypos = player.position.y * this.rowSize;
-            // this.context.fillRect(xpos, ypos, this.rowSize, this.rowSize);
             const radius = this.rowSize / 2;
             this.context.beginPath();
             this.context.arc(xpos + radius, ypos + radius, radius, 0, 2 * Math.PI);
