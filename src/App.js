@@ -15,7 +15,9 @@ class App extends React.Component {
             this.url = window.location.origin;
         }
         if (!this.wsUrl) {
-            this.wsUrl = window.location.origin.replace(/^http/, config.wsProtocol);
+            const protocol = window.location.protocol;
+            const wsProtocol = protocol === "http:" ? "ws" : "wss";
+            this.wsUrl = window.location.origin.replace(new RegExp(`^${protocol}`, "g"), wsProtocol);
         }
         this.connectWebSocket();
     }
