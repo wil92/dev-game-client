@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
-
-const URL = "ws://localhost:3002";
-const API = "http://localhost:3001/game/field";
+import config from "./config";
 
 class App extends React.Component {
     rowSize = 8;
@@ -11,11 +9,19 @@ class App extends React.Component {
     field = [];
 
     componentDidMount() {
+        this.url = config.apiUrl;
+        this.wsUrl = config.wsUrl;
+        if (!this.url) {
+            this.url = window.location.origin;
+        }
+        if (!this.wsUrl) {
+            this.wsUrl = window.location.origin.replace(/^http/, 'ws');
+        }
         this.connectWebSocket();
     }
 
     connectWebSocket() {
-        this.ws = new WebSocket(URL);
+        this.ws = new WebSocket(this.wsUrl);
 
         this.ws.onopen = () => {
             console.log('connected');
@@ -44,7 +50,7 @@ class App extends React.Component {
     }
 
     fetchField() {
-        fetch(API)
+        fetch(`${this.url}/game/field`)
             .then(res => res.json())
             .then((data) => {
                 if (data) {
