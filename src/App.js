@@ -21,7 +21,7 @@ class App extends React.Component {
     }
 
     connectWebSocket() {
-        this.ws = new WebSocket(this.wsUrl);
+        this.ws = new WebSocket(this.wsUrl + "/game");
 
         this.ws.onopen = () => {
             console.log('connected');
