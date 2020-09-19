@@ -10,7 +10,10 @@ const FieldEnum = {
 
 const MessagesTypes = {
     USERS_DATA: 'USERS_DATA',
-    MAP_UPDATE: 'MAP_UPDATE'
+    MAP_UPDATE: 'MAP_UPDATE',
+    GAME_PAUSE: 'GAME_PAUSE',
+    GAME_END: 'GAME_END',
+    GAME_START: 'GAME_START'
 };
 
 class App extends React.Component {
@@ -52,6 +55,9 @@ class App extends React.Component {
                         break;
                     case MessagesTypes.MAP_UPDATE:
                         this.field = message.data;
+                        break;
+                    case MessagesTypes.GAME_START:
+                        this.fetchField();
                         break;
                     default:
                 }
