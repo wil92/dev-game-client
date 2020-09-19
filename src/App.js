@@ -51,7 +51,7 @@ class App extends React.Component {
                         this.paintPlayers();
                         break;
                     case MessagesTypes.MAP_UPDATE:
-                        this.fetchField(false);
+                        this.field = message.data;
                         break;
                     default:
                 }
@@ -72,17 +72,15 @@ class App extends React.Component {
         };
     }
 
-    fetchField(withPaint = true) {
+    fetchField() {
         fetch(`${this.url}/game/field`)
             .then(res => res.json())
             .then((data) => {
                 if (data) {
-                    if (withPaint) {
-                        this.setState({
-                            height: data.length * this.rowSize,
-                            width: data[0].length * this.rowSize
-                        });
-                    }
+                    this.setState({
+                        height: data.length * this.rowSize,
+                        width: data[0].length * this.rowSize
+                    });
                     this.field = data;
                 }
             })
