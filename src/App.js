@@ -106,6 +106,8 @@ class App extends React.Component {
             const radius = this.rowSize / 2;
             this.context.beginPath();
             this.context.arc(xpos + radius, ypos + radius, radius, 0, 2 * Math.PI);
+            this.context.strokeStyle = '#ffffff';
+            this.context.stroke();
             this.context.fill();
         });
     }
