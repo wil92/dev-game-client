@@ -2,6 +2,17 @@ import React from 'react';
 import './App.css';
 import config from "./config";
 
+const FieldEnum = {
+    FREE: 0,
+    BLOCK: 1,
+    GAS: 2
+};
+
+const MessagesTypes = {
+    USERS_DATA: 'USERS_DATA',
+    MAP_UPDATE: 'MAP_UPDATE'
+};
+
 class App extends React.Component {
     rowSize = 8;
 
@@ -33,7 +44,17 @@ class App extends React.Component {
 
         this.ws.onmessage = evt => {
             try {
-                this.players = JSON.parse(evt.data);
+                const message = JSON.parse(evt.data);
+                switch (message.type) {
+                    case MessagesTypes.USERS_DATA:
+                        this.players = message.data;
+                        this.paintPlayers();
+                        break;
+                    case MessagesTypes.MAP_UPDATE:
+                        this.fetchField(false);
+                        break;
+                    default:
+                }
                 this.paintPlayers();
             } catch (er) {
                 console.log(er);
@@ -51,15 +72,17 @@ class App extends React.Component {
         };
     }
 
-    fetchField() {
+    fetchField(withPaint = true) {
         fetch(`${this.url}/game/field`)
             .then(res => res.json())
             .then((data) => {
                 if (data) {
-                    this.setState({
-                        height: data.length * this.rowSize,
-                        width: data[0].length * this.rowSize
-                    });
+                    if (withPaint) {
+                        this.setState({
+                            height: data.length * this.rowSize,
+                            width: data[0].length * this.rowSize
+                        });
+                    }
                     this.field = data;
                 }
             })
@@ -86,9 +109,22 @@ class App extends React.Component {
     cleanField() {
         for (let i = 0; i < this.field.length; i++) {
             for (let j = 0; j < this.field[i].length; j++) {
-                this.context.fillStyle = this.field[i][j] ? '#ffffff' : '#000000';
+                this.context.fillStyle = this.getSquareColor(this.field[i][j]);
                 this.context.fillRect(i * this.rowSize, j * this.rowSize, this.rowSize, this.rowSize);
             }
+        }
+    }
+
+    getSquareColor(rowValue) {
+        switch (rowValue) {
+            case FieldEnum.GAS:
+                return '#7fd28d';
+            case FieldEnum.BLOCK:
+                return '#ffffff';
+            case FieldEnum.FREE:
+                return '#000000';
+            default:
+                return '#ffffff';
         }
     }
 
