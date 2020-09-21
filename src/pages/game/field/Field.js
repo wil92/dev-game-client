@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
-import config from "./config";
+
+import config from "../../../config";
 
 const FieldEnum = {
     FREE: 0,
@@ -16,11 +16,17 @@ const MessagesTypes = {
     GAME_START: 'GAME_START'
 };
 
-class App extends React.Component {
+class Field extends React.Component {
     rowSize = 8;
 
     players = [];
     field = [];
+
+    constructor(props) {
+        super(props);
+
+        this.canvas = React.createRef();
+    }
 
     componentDidMount() {
         this.url = config.apiUrl;
@@ -34,6 +40,7 @@ class App extends React.Component {
             this.wsUrl = window.location.origin.replace(new RegExp(`^${protocol}`, "g"), wsProtocol);
         }
         this.connectWebSocket();
+        this.loginInApi();
     }
 
     connectWebSocket() {
@@ -48,6 +55,9 @@ class App extends React.Component {
         this.ws.onmessage = evt => {
             try {
                 const message = JSON.parse(evt.data);
+                if (this.field && this.field.length !== 0) {
+                    this.rowSize = this.state.height / this.field.length;
+                }
                 switch (message.type) {
                     case MessagesTypes.USERS_DATA:
                         this.players = message.data;
@@ -83,18 +93,31 @@ class App extends React.Component {
             .then(res => res.json())
             .then((data) => {
                 if (data) {
-                    this.setState({
-                        height: data.length * this.rowSize,
-                        width: data[0].length * this.rowSize
-                    });
                     this.field = data;
                 }
             })
             .catch(console.log)
     }
 
+    loginInApi() {
+        const search = window.location.search;
+        const params = new URLSearchParams(search);
+        const code = params.get('code');
+        if (code) {
+            fetch(`${this.url}/auth/github`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({code})
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                })
+        }
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
-        this.context = this.refs.canvas.getContext('2d');
+        this.context = this.canvas.current.getContext('2d');
         this.cleanField();
     }
 
@@ -136,15 +159,11 @@ class App extends React.Component {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <canvas ref="canvas"
-                            height={this.state?.height}
-                            width={this.state?.width}/>
-                </header>
-            </div>
+            <canvas ref={this.canvas}
+                    height={this.state?.height}
+                    width={this.state?.width}/>
         );
     }
 }
 
-export default App;
+export default Field;

@@ -1,0 +1,15 @@
+.Toolbar {
+    width: 100vw;
+    height: 50px;
+    background-color: #191a1d;
+    display: flex;
+    flex-direction: row;
+}
+
+.Separator {
+    flex: 100%;
+}
+
+.Login {
+
+}

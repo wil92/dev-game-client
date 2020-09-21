@@ -1,0 +1,18 @@
+.LoginContainer {
+    height: 100%;
+}
+
+.LoginButton {
+    height: 35px;
+    width: 80px;
+    margin: 8px;
+    background-color: #64a07c;
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 2px;
+}
+
+.LoginButton:hover {
+    background-color: #4b7d5f;
+}
