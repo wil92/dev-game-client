@@ -1,19 +1,18 @@
 import React from 'react';
-import {Route, Switch, useRouteMatch} from "react-router-dom";
+import {Route, Router, useRouteMatch} from "react-router-dom";
 
 import StrategyList from "./list/strategy-list";
 import StrategyDetails from "./details/strategy-details";
 
-function Strategies() {
+function Strategies(props) {
     let match = useRouteMatch();
-    console.log(match.path);
-
+    console.log(props);
     return (
-        <Switch>
+        <Router history={props.history}>
             <Route path={`${match.path}/`} exact={true} component={StrategyList}/>
             <Route path={`${match.path}/create`} component={StrategyDetails}/>
             <Route path={`${match.path}/edit/:id`} component={StrategyDetails}/>
-        </Switch>
+        </Router>
     );
 }
 

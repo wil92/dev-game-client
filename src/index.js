@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Router, Route} from 'react-router-dom';
+import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import {createBrowserHistory} from "history";
 
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Game from "./pages/game/Game";
 import Strategies from "./pages/strategies/Strategies";
+import Help from "./pages/help/Help";
 
 const routing = (
-    <Router history={createBrowserHistory()}>
-        <Route path="/" exact={true} component={Game}/>
-        <Route path="/strategy" component={Strategies}/>
-    </Router>
+    <BrowserRouter history={createBrowserHistory()}>
+        <Switch>
+            <Route exact path="/" component={Game}/>
+            <Route path="/help" component={Help}/>
+            <Route path="/strategy" component={Strategies}/>
+        </Switch>
+    </BrowserRouter>
 )
 
 ReactDOM.render(routing, document.getElementById('root'));

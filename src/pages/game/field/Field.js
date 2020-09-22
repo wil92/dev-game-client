@@ -54,7 +54,7 @@ class Field extends React.Component {
         this.ws.onmessage = evt => {
             try {
                 const message = JSON.parse(evt.data);
-                if (this.field && this.field.length !== 0) {
+                if (this.field && this.state && this.field.length !== 0) {
                     this.rowSize = this.state.height / this.field.length;
                 }
                 switch (message.type) {

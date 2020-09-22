@@ -1,20 +1,20 @@
 import React from 'react';
 
-import './strategy-details.css';
-import '../../../common.css';
-import Toolbar from "../../../components/toolbar/Toolbar";
+import './Help.css';
+import '../../common.css';
+import Toolbar from "../../components/toolbar/Toolbar";
 
-class StrategyDetails extends React.Component {
+class Help extends React.Component {
     render() {
         return (
             <div className="Page">
                 <Toolbar history={this.props?.history}/>
                 <div className="PageContent">
-                    strategy details
+                    help
                 </div>
             </div>
         );
     }
 }
 
-export default StrategyDetails;
+export default Help;

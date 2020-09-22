@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './Game.css';
+import '../../common.css';
 import Field from "./field/Field";
 import Toolbar from "../../components/toolbar/Toolbar";
 
@@ -29,7 +30,7 @@ class Game extends React.Component {
         return (
             <div className="Page">
                 <Toolbar history={this.props?.history}/>
-                <div ref={this.fieldContainer} className="FieldContainer">
+                <div ref={this.fieldContainer} className="PageContent">
                     <div className="FieldSize">
                         <Field ref={this.field}/>
                     </div>
