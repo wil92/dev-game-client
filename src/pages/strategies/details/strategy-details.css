@@ -9,8 +9,13 @@
     margin: 20px;
 }
 
+.Separator {
+    flex: 100%;
+}
+
 .ActionsContainer {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    margin-bottom: 10px;
 }
