@@ -10,6 +10,34 @@
     flex: 100%;
 }
 
-.Login {
+.Button {
+    height: 35px;
+    width: 80px;
+    margin: 8px;
+    background-color: #64a07c;
+    border: none;
+    color: #fff;
+    text-transform: uppercase;
+    border-radius: 2px;
+    font: 400 13.3333px Arial;
+    padding: 0 6px;
+    display: inline-block;
+    box-sizing: border-box;
+    text-decoration: none;
+    vertical-align: middle;
+}
 
+.ButtonContainer {
+    height: 35px;
+    display: flex;
+}
+
+.ButtonText {
+    align-self: center;
+    display: initial;
+    width: 100%;
+}
+
+.Button:hover {
+    background-color: #4b7d5f;
 }
