@@ -36,7 +36,7 @@ class StrategyList extends React.Component {
     }
 
     newStrategy() {
-        console.log('new');
+        this.props.history.push('/strategy/create');
     }
 
     render() {
