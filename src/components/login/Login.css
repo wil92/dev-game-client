@@ -16,3 +16,47 @@
 .LoginButton:hover {
     background-color: #4b7d5f;
 }
+
+.DialogClose {
+    display: none;
+}
+
+.DialogOpen {
+    z-index: 10000;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: #0e0a08e0;
+    left: 0;
+    top: 0;
+}
+
+.Dialog {
+    z-index: 10001;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 400px;
+    height: 300px;
+    background-color: #3f492c;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.DialogBody {
+    flex: 100%;
+    padding: 20px;
+}
+
+.DialogHead {
+    padding: 10px;
+    background-color: #22290c;
+}
+
+.ButtonGithub {
+    width: 80%;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}

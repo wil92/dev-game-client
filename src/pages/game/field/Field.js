@@ -40,7 +40,6 @@ class Field extends React.Component {
             this.wsUrl = window.location.origin.replace(new RegExp(`^${protocol}`, "g"), wsProtocol);
         }
         this.connectWebSocket();
-        this.loginInApi();
     }
 
     connectWebSocket() {
@@ -97,23 +96,6 @@ class Field extends React.Component {
                 }
             })
             .catch(console.log)
-    }
-
-    loginInApi() {
-        const search = window.location.search;
-        const params = new URLSearchParams(search);
-        const code = params.get('code');
-        if (code) {
-            fetch(`${this.url}/auth/github`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({code})
-            })
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data);
-                })
-        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

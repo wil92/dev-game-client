@@ -28,7 +28,7 @@ class Game extends React.Component {
     render() {
         return (
             <div className="Page">
-                <Toolbar/>
+                <Toolbar history={this.props?.history}/>
                 <div ref={this.fieldContainer} className="FieldContainer">
                     <div className="FieldSize">
                         <Field ref={this.field}/>

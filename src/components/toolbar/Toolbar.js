@@ -7,8 +7,8 @@ class Toolbar extends React.Component {
     render() {
         return (
             <div className="Toolbar">
-                <div className="Separator"></div>
-                <div className="Login"><Login/></div>
+                <div className="Separator"/>
+                <div className="Login"><Login history={this.props?.history}/></div>
             </div>
         );
     }
