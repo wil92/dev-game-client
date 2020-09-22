@@ -1,0 +1,15 @@
+.PageContentLocal {
+    justify-content: flex-start;
+}
+
+.ActionContainer {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: calc(100% - 40px);
+}
+
+.Table {
+    margin: 20px;
+}

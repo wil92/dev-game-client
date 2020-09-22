@@ -6,7 +6,6 @@ import StrategyDetails from "./details/strategy-details";
 
 function Strategies(props) {
     let match = useRouteMatch();
-    console.log(props);
     return (
         <Router history={props.history}>
             <Route path={`${match.path}/`} exact={true} component={StrategyList}/>
