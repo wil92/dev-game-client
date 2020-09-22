@@ -1,0 +1,16 @@
+.PageContentDetails {
+    justify-content: flex-start;
+}
+
+.DataContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 20px;
+}
+
+.ActionsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
