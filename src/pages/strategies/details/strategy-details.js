@@ -3,6 +3,7 @@ import React from 'react';
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-solarized_dark";
+import "ace-builds/src-noconflict/ext-language_tools";
 
 import './strategy-details.css';
 import '../../../common.css';
@@ -18,6 +19,13 @@ const EvalEnum = {
 };
 
 class StrategyDetails extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {name: ''};
+    }
+
 
     componentDidMount() {
         this.setState({id: this.props.match.params.id, name: "", code: ""});
@@ -117,7 +125,7 @@ class StrategyDetails extends React.Component {
     }
 
     statusTitle(status) {
-        switch (status){
+        switch (status) {
             case EvalEnum.OK:
                 return 'VALID';
             case EvalEnum.ERROR:
@@ -149,7 +157,8 @@ class StrategyDetails extends React.Component {
                 <div className="PageContent PageContentDetails">
                     <div className="DataContainer">
                         <div className="ActionsContainer">
-                            <input type="text" placeholder="Strategy Name" value={this.state?.name} onChange={this.onChangeName.bind(this)}/>
+                            <input type="text" placeholder="Strategy Name" value={this.state?.name}
+                                   onChange={this.onChangeName.bind(this)}/>
                             <div className="Separator"/>
                             <button onClick={this.saveStrategy.bind(this)}>Save</button>
                             <button onClick={this.validateStrategy.bind(this)}>Validate</button>
@@ -167,9 +176,6 @@ class StrategyDetails extends React.Component {
                             highlightActiveLine={true}
                             value={this.state?.code}
                             setOptions={{
-                                enableBasicAutocompletion: true,
-                                enableLiveAutocompletion: true,
-                                enableSnippets: false,
                                 showLineNumbers: true,
                                 tabSize: 2,
                             }}/>
