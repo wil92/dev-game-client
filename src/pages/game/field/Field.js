@@ -42,6 +42,16 @@ class Field extends React.Component {
         this.connectWebSocket();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        this.context = this.canvas.current.getContext('2d');
+        this.cleanField();
+    }
+
+    componentWillUnmount() {
+        this.close = true;
+        this.ws.close();
+    }
+
     connectWebSocket() {
         this.ws = new WebSocket(this.wsUrl + "/websocket");
 
@@ -79,11 +89,13 @@ class Field extends React.Component {
         this.ws.onerror = () => this.ws.close();
 
         this.ws.onclose = () => {
-            this.timerId = setInterval(() => {
-                this.ws.close();
-                this.connectWebSocket();
-                console.log('connecting');
-            }, 3000);
+            if (!this.close) {
+                this.timerId = setInterval(() => {
+                    this.ws.close();
+                    this.connectWebSocket();
+                    console.log('connecting');
+                }, 3000);
+            }
         };
     }
 
@@ -96,11 +108,6 @@ class Field extends React.Component {
                 }
             })
             .catch(console.log)
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        this.context = this.canvas.current.getContext('2d');
-        this.cleanField();
     }
 
     paintPlayers() {
