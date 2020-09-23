@@ -20,11 +20,28 @@ const EvalEnum = {
 class StrategyDetails extends React.Component {
 
     componentDidMount() {
+        this.setState({id: this.props.match.params.id, name: "", code: ""});
         this.url = config.apiUrl;
         if (!this.url) {
             this.url = window.location.origin;
         }
-        this.loadDummyCode();
+        if (this.props.match?.params?.id) {
+            this.loadStrategy(this.props.match.params.id);
+        } else {
+            this.loadDummyCode();
+        }
+    }
+
+    loadStrategy(id) {
+        const userData = loadUserData();
+        fetch(`${this.url}/strategies/${id}`, {headers: {"Authorization": `Bearer ${userData.token}`}})
+            .then(res => res.json())
+            .then((code) => {
+                if (code) {
+                    this.setState({...code});
+                }
+            })
+            .catch(console.log);
     }
 
     loadDummyCode() {
@@ -33,13 +50,10 @@ class StrategyDetails extends React.Component {
             .then(res => res.json())
             .then((code) => {
                 if (code) {
-                    this.setState({code: code.code});
+                    this.setState({...code});
                 }
             })
             .catch(console.log);
-    }
-
-    onLoad() {
     }
 
     onChange(code) {
@@ -68,6 +82,38 @@ class StrategyDetails extends React.Component {
     }
 
     saveStrategy() {
+        const options = {
+            method: "POST",
+            headers: {"Authorization": `Bearer ${loadUserData().token}`, 'Content-Type': 'application/json'},
+            body: JSON.stringify({code: this.state.code, name: this.state.name})
+        };
+        if (this.state.id) {
+            this.editStrategy(options);
+        } else {
+            this.createStrategy(options);
+        }
+    }
+
+    editStrategy(options) {
+        fetch(`${this.url}/strategies/${this.state.id}`, options)
+            .then(res => res.json())
+            .then((strategy) => {
+                if (strategy) {
+                    this.setState({code: strategy.code, name: strategy.name});
+                }
+            })
+            .catch(console.log);
+    }
+
+    createStrategy(options) {
+        fetch(`${this.url}/strategies`, options)
+            .then(res => res.json())
+            .then((strategy) => {
+                if (strategy) {
+                    this.props.history.replace(`/strategy/edit/${strategy.id}`, this.state);
+                }
+            })
+            .catch(console.log);
     }
 
     statusTitle(status) {
@@ -92,6 +138,10 @@ class StrategyDetails extends React.Component {
         return '';
     }
 
+    onChangeName(event) {
+        this.setState({name: event.target.value});
+    }
+
     render() {
         return (
             <div className="Page">
@@ -99,7 +149,7 @@ class StrategyDetails extends React.Component {
                 <div className="PageContent PageContentDetails">
                     <div className="DataContainer">
                         <div className="ActionsContainer">
-                            <input type="text" placeholder="Strategy Name"/>
+                            <input type="text" placeholder="Strategy Name" value={this.state?.name} onChange={this.onChangeName.bind(this)}/>
                             <div className="Separator"/>
                             <button onClick={this.saveStrategy.bind(this)}>Save</button>
                             <button onClick={this.validateStrategy.bind(this)}>Validate</button>
@@ -110,7 +160,6 @@ class StrategyDetails extends React.Component {
                             theme="solarized_dark"
                             width="100%"
                             name="blah2"
-                            onLoad={this.onLoad.bind(this)}
                             onChange={this.onChange.bind(this)}
                             fontSize={16}
                             showPrintMargin={true}

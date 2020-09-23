@@ -15,9 +15,19 @@ class StrategyList extends React.Component {
         this.fetchStrategies();
     }
 
+    activateStrategy(id) {
+        fetch(`${this.url}/strategies/${id}/activate`, {
+            method: 'POST',
+            headers: {"Authorization": `Bearer ${loadUserData().token}`}
+        })
+            .then(() => {
+                this.fetchStrategies();
+            })
+            .catch(console.log);
+    }
+
     fetchStrategies() {
-        const userData = loadUserData();
-        fetch(`${this.url}/strategies`, {headers: {"Authorization": `Bearer ${userData.token}`}})
+        fetch(`${this.url}/strategies`, {headers: {"Authorization": `Bearer ${loadUserData().token}`}})
             .then(res => res.json())
             .then((strategies) => {
                 if (strategies) {
@@ -28,11 +38,7 @@ class StrategyList extends React.Component {
     }
 
     editStrategy(id) {
-        console.log('edit', id);
-    }
-
-    removeStrategy(id) {
-        console.log('remove', id);
+        this.props.history.push(`/strategy/edit/${id}`);
     }
 
     newStrategy() {
@@ -57,14 +63,14 @@ class StrategyList extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                        {(this.state?.strategies || []).map(strategy => (
-                            <tr>
-                                <td>strategy.name</td>
+                        {(this.state?.strategies || []).map((strategy, index) => (
+                            <tr key={index}>
+                                <td>{strategy.name}</td>
                                 <td>{strategy.valid ? "VALID" : "INVALID"}</td>
                                 <td>{strategy.active ? "ACTIVE" : ""}</td>
                                 <td>
                                     <button onClick={() => this.editStrategy(strategy._id)}>edit</button>
-                                    <button onClick={() => this.removeStrategy(strategy._id)}>remove</button>
+                                    <button onClick={() => this.activateStrategy(strategy._id)}>activate</button>
                                 </td>
                             </tr>
                         ))}
