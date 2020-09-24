@@ -1,5 +1,6 @@
 import React from 'react';
 
+import './Field.css';
 import config from "../../../config";
 
 const FieldEnum = {
@@ -10,6 +11,7 @@ const FieldEnum = {
 
 const MessagesTypes = {
     USERS_DATA: 'USERS_DATA',
+    GAME_STANDING: 'GAME_STANDING',
     MAP_UPDATE: 'MAP_UPDATE',
     GAME_PAUSE: 'GAME_PAUSE',
     GAME_END: 'GAME_END',
@@ -78,6 +80,9 @@ class Field extends React.Component {
                     case MessagesTypes.GAME_START:
                         this.fetchField();
                         break;
+                    case MessagesTypes.GAME_STANDING:
+                        this.updateStanding(message.data);
+                        break
                     default:
                 }
                 this.paintPlayers();
@@ -97,6 +102,10 @@ class Field extends React.Component {
                 }, 3000);
             }
         };
+    }
+
+    updateStanding(standing) {
+        this.setState({standing})
     }
 
     fetchField() {
@@ -148,9 +157,23 @@ class Field extends React.Component {
 
     render() {
         return (
-            <canvas ref={this.canvas}
-                    height={this.state?.height}
-                    width={this.state?.width}/>
+            <div className="FieldContainer">
+                <canvas ref={this.canvas}
+                        height={this.state?.height}
+                        width={this.state?.width}/>
+                <div>
+                    <table className="StandingTable">
+                        <tr><th className="TableSeparator">user</th><th className="TableSeparator">strategy</th><th>standing</th></tr>
+                        {this.state?.standing?.map((strategy, index) => (
+                            <tr key={index}>
+                                <td className="TableSeparator">{strategy?.username}</td>
+                                <td className="TableSeparator">{strategy?.name}</td>
+                                <td>{strategy?.standing || 'ALIVE'}</td>
+                            </tr>
+                        ))}
+                    </table>
+                </div>
+            </div>
         );
     }
 }

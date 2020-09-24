@@ -1,0 +1,23 @@
+.FieldContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.StandingTable {
+    font-size: 1rem;
+    background-color: #526d2e21;
+    border-spacing: initial;
+}
+
+.StandingTable  td, .StandingTable  th {
+    padding: 3px 10px;
+}
+
+.StandingTable  th {
+    text-transform: uppercase;
+}
+
+.TableSeparator {
+    border-right: solid 1px #fff;
+}
