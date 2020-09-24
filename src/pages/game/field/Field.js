@@ -169,28 +169,26 @@ class Field extends React.Component {
                 <canvas ref={this.canvas}
                         height={this.state?.height}
                         width={this.state?.width}/>
-                <div>
-                    <table className="StandingTable">
-                        <thead>
-                        <tr>
-                            <th className="TableSeparator">user</th>
-                            <th className="TableSeparator">strategy</th>
-                            <th className="TableSeparator">health</th>
-                            <th>standing</th>
+                <table className="StandingTable">
+                    <thead>
+                    <tr>
+                        <th className="TableSeparator">user</th>
+                        <th className="TableSeparator">strategy</th>
+                        <th className="TableSeparator">health</th>
+                        <th>standing</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {this.state?.standing?.map((strategy, index) => (
+                        <tr key={index} onClick={() => this.setState({selected: strategy.id})}>
+                            <td className="TableSeparator">{strategy?.username}</td>
+                            <td className="TableSeparator">{strategy?.name}</td>
+                            <td className="TableSeparator">{strategy?.health}</td>
+                            <td>{strategy?.standing || 'ALIVE'}</td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {this.state?.standing?.map((strategy, index) => (
-                            <tr key={index} onClick={() => this.setState({selected: strategy.id})}>
-                                <td className="TableSeparator">{strategy?.username}</td>
-                                <td className="TableSeparator">{strategy?.name}</td>
-                                <td className="TableSeparator">{strategy?.health}</td>
-                                <td>{strategy?.standing || 'ALIVE'}</td>
-                            </tr>
-                        ))}
-                        </tbody>
-                    </table>
-                </div>
+                    ))}
+                    </tbody>
+                </table>
             </div>
         );
     }
