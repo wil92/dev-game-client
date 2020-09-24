@@ -11,11 +11,16 @@ class Game extends React.Component {
 
         this.fieldContainer = React.createRef();
         this.field = React.createRef();
+        this.resize = this.resize.bind(this);
     }
 
     componentDidMount() {
-        window.addEventListener('resize', this.resize.bind(this));
+        window.addEventListener('resize', this.resize);
         this.resize();
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.resize);
     }
 
     resize() {
