@@ -45,22 +45,28 @@ class StrategyList extends React.Component {
         this.props.history.push('/strategy/create');
     }
 
+    disableNewStrategyButton() {
+        return this.state?.strategies.length >= 5;
+    }
+
     render() {
         return (
             <div className="Page">
                 <Toolbar history={this.props?.history}/>
                 <div className="PageContent PageContentLocal">
                     <div className="ActionContainer">
-                        <button onClick={this.newStrategy.bind(this)}>new strategy</button>
+                        <button onClick={this.newStrategy.bind(this)}
+                                disabled={this.disableNewStrategyButton.bind(this)}>new strategy
+                        </button>
                     </div>
                     <table className="Table">
                         <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Validation</th>
-                                <th>Active</th>
-                                <th>Actions</th>
-                            </tr>
+                        <tr>
+                            <th>Name</th>
+                            <th>Validation</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
                         </thead>
                         <tbody>
                         {(this.state?.strategies || []).map((strategy, index) => (
