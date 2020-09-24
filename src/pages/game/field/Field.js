@@ -130,6 +130,14 @@ class Field extends React.Component {
             this.context.strokeStyle = '#ffffff';
             this.context.stroke();
             this.context.fill();
+
+            if (this.state?.selected === player.id) {
+                const markRadius = this.rowSize * 1.5;
+                this.context.beginPath();
+                this.context.arc(xpos + radius, ypos + radius, markRadius, 0, 2 * Math.PI);
+                this.context.strokeStyle = '#ff0000';
+                this.context.stroke();
+            }
         });
     }
 
@@ -163,14 +171,24 @@ class Field extends React.Component {
                         width={this.state?.width}/>
                 <div>
                     <table className="StandingTable">
-                        <tr><th className="TableSeparator">user</th><th className="TableSeparator">strategy</th><th>standing</th></tr>
+                        <thead>
+                        <tr>
+                            <th className="TableSeparator">user</th>
+                            <th className="TableSeparator">strategy</th>
+                            <th className="TableSeparator">health</th>
+                            <th>standing</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         {this.state?.standing?.map((strategy, index) => (
-                            <tr key={index}>
+                            <tr key={index} onClick={() => this.setState({selected: strategy.id})}>
                                 <td className="TableSeparator">{strategy?.username}</td>
                                 <td className="TableSeparator">{strategy?.name}</td>
+                                <td className="TableSeparator">{strategy?.health}</td>
                                 <td>{strategy?.standing || 'ALIVE'}</td>
                             </tr>
                         ))}
+                        </tbody>
                     </table>
                 </div>
             </div>
