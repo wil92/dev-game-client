@@ -58,6 +58,7 @@ class Login extends React.Component {
     logout() {
         clearSession();
         this.updateAuthStatus();
+        this.props.history.replace('/');
     }
 
     updateAuthStatus() {
