@@ -88,27 +88,45 @@ strategyInput: { vision, players, position, name, health, attack, velocity }
 { direction, velocity }
 ```
 
-- `direction: number`: base on the direction's image, this value will define the strategy move.
-- `velocity: number`: the number of steps to make in the selected direction. It should be between `0` and `max velocity`
+- `(direction: number)`: base on the direction's image, this value will define the strategy move.
+
+![logo](./directions.png)
+
+- `(velocity: number)`: the number of steps to make in the selected direction. It should be between `0` and `max velocity`
 
 ### Helpers functions
 
 ```
-validMovements({vision, position, velocity}) 
-validateMovement({vision, position, direction, velocity})
-randomNumber(X)
+validMovements({vision: number[][], position: number, velocity: number}) : {direction: number, velocity: number}[]
+validateMovement({vision: number[][], position: number, velocity: number, direction: number}) : boolean
+randomNumber(X: number) : number
+transformMoveToPos(position: {x: number, y: number}, move: {direction: number, velocity: number})) : {x: number, y: number}
+transformPosToMove(position: {x: number, y: number}, nextPosition: {x: number, y: number}) : {direction: number, velocity: number} | null
 ```
 
-- `validMovements`: given the input values, return all the valid movements.
-- `validateMovement`: given the map and the current position, return true or false if the given movement is valid or not.
-- `randomNumber`: given a number `X`, the method return a random number between `0` and `X-1` 
+- `validMovements({vision, position, velocity})`: given the input values, return all the
+ valid movements.
+
+- `validateMovement({vision, position, velocity, direction})`: given the map and the
+ current position, return true or false if the given movement is valid or
+ not.
+
+- `randomNumber(X)`: given a number `X`, the method return a random number between `0` and `X-1` 
+
+- `transformMoveToPos(position, move)`: given the
+ position of the user and the movement, the function return the position in the vision area in teh format `{x: number
+ , y: number}`.
+
+- `transformPosToMove(position, nextPosition)`: given the initial
+ position and the next position to move, the function return the movement need in the format `{direction
+ : number, velocity: number}`.
 
 ### Enum values
 
 You also have access to some enum values used in the field
 
 ```
-FieldEnum.BLOCK
-FieldEnum.FREE
-FieldEnum.GAS
+FieldEnum.BLOCK = 0
+FieldEnum.FREE = 1
+FieldEnum.GAS = 2
 ```

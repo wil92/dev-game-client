@@ -8,3 +8,7 @@
     display: inline-block;
     width: 100%;
 }
+
+.HelpPageContent p code, .HelpPageContent li code {
+    display: inline;
+}
