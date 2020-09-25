@@ -1,13 +1,13 @@
 import React from 'react';
 import {Route, Router, Redirect, useRouteMatch} from "react-router-dom";
+import {connect} from "react-redux";
 
 import StrategyList from "./list/strategy-list";
 import StrategyDetails from "./details/strategy-details";
-import {isAuth} from "../../utils/user-data";
 
 function Strategies(props) {
     let match = useRouteMatch();
-    if (!isAuth()) {
+    if (!props.isAuth) {
         return (
             <Redirect to={{pathname: "/"}}/>
         );
@@ -21,4 +21,6 @@ function Strategies(props) {
     );
 }
 
-export default Strategies;
+const mapStateToProps = state => ({isAuth: Boolean(state?.token)});
+
+export default connect(mapStateToProps)(Strategies);
