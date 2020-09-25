@@ -9,7 +9,7 @@ import './strategy-details.css';
 import '../../../common.css';
 import Toolbar from "../../../components/toolbar/Toolbar";
 import {loadUserData} from "../../../utils/user-data";
-import {getApiUrl, getWebsocketUrl} from "../../../utils/urls";
+import {getApiUrl} from "../../../utils/urls";
 
 const EvalEnum = {
     OK: 0,

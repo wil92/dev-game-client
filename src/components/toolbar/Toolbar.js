@@ -1,9 +1,9 @@
 import React from 'react';
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 
 import './Toolbar.css';
 import Login from "../login/Login";
-import {isAuth} from "../../utils/user-data";
 
 class Toolbar extends React.Component {
     render() {
@@ -15,7 +15,7 @@ class Toolbar extends React.Component {
                     </Link>
                 </div>
                 <div className="Separator"/>
-                {isAuth() && <div>
+                {this.props.isAuth && <div>
                     <Link className="Button" to="/strategy">
                         <div className="ButtonContainer"><span className="ButtonText">{"{Codes}"}</span></div>
                     </Link>
@@ -31,4 +31,6 @@ class Toolbar extends React.Component {
     }
 }
 
-export default Toolbar;
+const mapStateToProps = state => ({isAuth: Boolean(state?.token)});
+
+export default connect(mapStateToProps)(Toolbar);

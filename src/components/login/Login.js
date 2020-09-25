@@ -2,8 +2,9 @@ import React from "react";
 
 import {config} from "../../config";
 import './Login.css'
-import {clearSession, isAuth, saveUserData} from "../../utils/user-data";
-
+import {connect} from "react-redux";
+import {logInAction, logOutAction} from "../../redux/auth/actions"
+import {getApiUrl} from "../../utils/urls";
 
 const LOGIN_TITLE = 'Login';
 const LOGOUT_TITLE = 'Logout';
@@ -11,14 +12,9 @@ const LOGOUT_TITLE = 'Logout';
 class Login extends React.Component {
 
     componentDidMount() {
-        this.url = config.apiUrl;
-        if (!this.url) {
-            this.url = window.location.origin;
-        }
+        this.url = getApiUrl()
         this.setState({dialogClass: "DialogClose"});
-        this.updateAuthStatus();
         this.loginInApi();
-
         this.removeQuery();
     }
 
@@ -35,10 +31,7 @@ class Login extends React.Component {
                     body: JSON.stringify({code})
                 })
                 .then(res => res.json())
-                .then(data => {
-                    saveUserData(data.username, data.token);
-                    this.updateAuthStatus();
-                })
+                .then(data => this.props.logInAction(data))
         }
     }
 
@@ -48,7 +41,7 @@ class Login extends React.Component {
     }
 
     buttonLoginLogout() {
-        if (!this.state.isAuth) {
+        if (!this.props.isAuth) {
             this.setState({dialogClass: "DialogOpen"});
         } else {
             this.logout();
@@ -56,16 +49,8 @@ class Login extends React.Component {
     }
 
     logout() {
-        clearSession();
-        this.updateAuthStatus();
+        this.props.logOutAction();
         this.props.history.replace('/');
-    }
-
-    updateAuthStatus() {
-        this.setState({
-            buttonTitle: isAuth() ? LOGOUT_TITLE : LOGIN_TITLE,
-            isAuth: isAuth()
-        });
     }
 
     closeDialog() {
@@ -86,7 +71,7 @@ class Login extends React.Component {
         return (
             <div className="LoginContainer">
                 <button className="LoginButton"
-                        onClick={this.buttonLoginLogout.bind(this)}>{this.state?.buttonTitle}</button>
+                        onClick={this.buttonLoginLogout.bind(this)}>{this.props.isAuth ? LOGOUT_TITLE : LOGIN_TITLE}</button>
                 <div className={this.state?.dialogClass} onClick={this.closeDialog.bind(this)}>
                     <div className="Dialog" onClick={this.stopPropagation.bind(this)}>
                         <div className="DialogHead">Login in dev-game</div>
@@ -100,4 +85,6 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+const mapStateToProps = state => ({...state, isAuth: Boolean(state?.token)});
+
+export default connect(mapStateToProps, {logInAction, logOutAction})(Login);

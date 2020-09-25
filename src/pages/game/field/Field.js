@@ -1,7 +1,6 @@
 import React from 'react';
 
 import './Field.css';
-import config from "../../../config";
 import {getApiUrl, getWebsocketUrl} from "../../../utils/urls";
 
 const FieldEnum = {
