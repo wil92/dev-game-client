@@ -1,0 +1,10 @@
+.HelpPageContent {
+    width: 90%;
+    text-align: left;
+}
+
+.HelpPageContent code {
+    overflow-x: auto;
+    display: inline-block;
+    width: 100%;
+}
