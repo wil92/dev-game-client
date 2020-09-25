@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Field.css';
 import config from "../../../config";
+import {getApiUrl, getWebsocketUrl} from "../../../utils/urls";
 
 const FieldEnum = {
     FREE: 0,
@@ -31,16 +32,8 @@ class Field extends React.Component {
     }
 
     componentDidMount() {
-        this.url = config.apiUrl;
-        this.wsUrl = config.wsUrl;
-        if (!this.url) {
-            this.url = window.location.origin;
-        }
-        if (!this.wsUrl) {
-            const protocol = window.location.protocol;
-            const wsProtocol = protocol === "http:" ? "ws:" : "wss:";
-            this.wsUrl = window.location.origin.replace(new RegExp(`^${protocol}`, "g"), wsProtocol);
-        }
+        this.url = getApiUrl();
+        this.wsUrl = getWebsocketUrl();
         this.connectWebSocket();
     }
 

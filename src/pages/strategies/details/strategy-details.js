@@ -8,8 +8,8 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import './strategy-details.css';
 import '../../../common.css';
 import Toolbar from "../../../components/toolbar/Toolbar";
-import config from "../../../config";
 import {loadUserData} from "../../../utils/user-data";
+import {getApiUrl, getWebsocketUrl} from "../../../utils/urls";
 
 const EvalEnum = {
     OK: 0,
@@ -29,10 +29,7 @@ class StrategyDetails extends React.Component {
 
     componentDidMount() {
         this.setState({id: this.props.match.params.id, name: "", code: ""});
-        this.url = config.apiUrl;
-        if (!this.url) {
-            this.url = window.location.origin;
-        }
+        this.url = getApiUrl();
         if (this.props.match?.params?.id) {
             this.loadStrategy(this.props.match.params.id);
         } else {

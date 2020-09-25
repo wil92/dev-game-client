@@ -3,15 +3,12 @@ import React from 'react';
 import './strategy-list.css';
 import '../../../common.css';
 import Toolbar from "../../../components/toolbar/Toolbar";
-import config from "../../../config";
 import {loadUserData} from "../../../utils/user-data";
+import {getApiUrl} from "../../../utils/urls";
 
 class StrategyList extends React.Component {
     componentDidMount() {
-        this.url = config.apiUrl;
-        if (!this.url) {
-            this.url = window.location.origin;
-        }
+        this.url = getApiUrl();
         this.fetchStrategies();
     }
 
@@ -45,8 +42,8 @@ class StrategyList extends React.Component {
         this.props.history.push('/strategy/create');
     }
 
-    disableNewStrategyButton() {
-        return this.state?.strategies.length >= 5;
+    enableNewStrategyButton() {
+        return this.state?.strategies.length < 5;
     }
 
     render() {
@@ -55,9 +52,9 @@ class StrategyList extends React.Component {
                 <Toolbar history={this.props?.history}/>
                 <div className="PageContent PageContentLocal">
                     <div className="ActionContainer">
-                        <button onClick={this.newStrategy.bind(this)}
-                                disabled={this.disableNewStrategyButton.bind(this)}>new strategy
-                        </button>
+                        {this.enableNewStrategyButton() && <button onClick={this.newStrategy.bind(this)}>
+                            new strategy
+                        </button>}
                     </div>
                     <table className="Table">
                         <thead>
