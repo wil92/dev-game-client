@@ -10,6 +10,7 @@ import '../../../common.css';
 import Toolbar from "../../../components/toolbar/Toolbar";
 import {loadUserData} from "../../../utils/user-data";
 import {getApiUrl} from "../../../utils/urls";
+import ReactJson from "react-json-view";
 
 const EvalEnum = {
     OK: 0,
@@ -79,7 +80,8 @@ class StrategyDetails extends React.Component {
                     this.setState({
                         valid: data.status,
                         averageTime: data.result?.averageTime,
-                        totalTime: data.result?.totalTime
+                        totalTime: data.result?.totalTime,
+                        result: data.result
                     });
                 }
             })
@@ -176,10 +178,11 @@ class StrategyDetails extends React.Component {
                                 showLineNumbers: true,
                                 tabSize: 2,
                             }}/>
-                        <div>
+                        <div style={{textAlign: "left", fontSize: "1rem"}}>
                             <p>status: {this.statusTitle(this.state?.valid)}</p>
                             <p>average time: {this.toMilliseconds(this.state?.averageTime)}</p>
                             <p>total time: {this.toMilliseconds(this.state?.totalTime)}</p>
+                            {this.state.result && <ReactJson src={this.state.result} theme="solarized"/>}
                         </div>
                     </div>
                 </div>
