@@ -167,16 +167,19 @@ class Field extends React.Component {
                         <th className="TableSeparator">user</th>
                         <th className="TableSeparator">strategy</th>
                         <th className="TableSeparator">health</th>
-                        <th>standing</th>
+                        <th className="TableSeparator">standing</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
                     {this.state?.standing?.map((strategy, index) => (
-                        <tr key={index} onClick={() => this.setState({selected: strategy.id})}>
+                        <tr key={index}
+                            onClick={() => this.setState({selected: this.state.selected === strategy.id ? '' : strategy.id})}>
                             <td className="TableSeparator">{strategy?.username}</td>
                             <td className="TableSeparator">{strategy?.name}</td>
                             <td className="TableSeparator">{strategy?.health}</td>
-                            <td>{strategy?.standing || 'ALIVE'}</td>
+                            <td className="TableSeparator">{strategy?.standing || 'ALIVE'}</td>
+                            <td><input type="radio" checked={strategy.id === this.state.selected} readOnly/></td>
                         </tr>
                     ))}
                     </tbody>
