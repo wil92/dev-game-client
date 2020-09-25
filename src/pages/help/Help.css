@@ -1,3 +1,7 @@
+.HelpPage {
+    overflow-x: hidden !important;
+}
+
 .HelpPageContent {
     width: 90%;
     text-align: left;

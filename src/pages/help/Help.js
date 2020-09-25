@@ -28,7 +28,7 @@ class Help extends React.Component {
 
     render() {
         return (
-            <div className="Page">
+            <div className="Page HelpPage">
                 <Toolbar history={this.props?.history}/>
                 <div className="PageContent HelpPageContent">
                     <ReactMarkdown source={this.state?.help || ''}/>

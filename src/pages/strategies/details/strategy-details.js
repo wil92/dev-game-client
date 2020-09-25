@@ -175,6 +175,8 @@ class StrategyDetails extends React.Component {
                             highlightActiveLine={true}
                             value={this.state?.code}
                             setOptions={{
+                                enableBasicAutocompletion: true,
+                                enableLiveAutocompletion: true,
                                 showLineNumbers: true,
                                 tabSize: 2,
                             }}/>
