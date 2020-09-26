@@ -12,6 +12,7 @@ import '../../../common.css';
 import Toolbar from "../../../components/toolbar/Toolbar";
 
 import {
+    activateStrategy,
     createStrategy, editStrategy,
     fetchStrategy,
     loadDummyCode,
@@ -53,6 +54,10 @@ class StrategyDetails extends React.Component {
         }
     }
 
+    activate() {
+        this.props.activateStrategy(this.state.id);
+    }
+
     statusTitle(status) {
         switch (status) {
             case EvalEnum.OK:
@@ -80,6 +85,7 @@ class StrategyDetails extends React.Component {
                             <div className="Separator"/>
                             <button onClick={this.saveStrategy.bind(this)}>Save</button>
                             <button onClick={this.props.validateStrategy}>Validate</button>
+                            {this.state?.id && <button onClick={this.activate.bind(this)}>Activate</button>}
                         </div>
                         <AceEditor
                             placeholder="Placeholder Text"
@@ -124,5 +130,6 @@ export default connect(mapStateToProps, {
     validateStrategy,
     createStrategy,
     fetchStrategy,
-    editStrategy
+    editStrategy,
+    activateStrategy
 })(StrategyDetails);
