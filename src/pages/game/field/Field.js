@@ -2,6 +2,7 @@ import React from 'react';
 
 import './Field.css';
 import {getApiUrl, getWebsocketUrl} from "../../../utils/urls";
+import {fetchInternal} from "../../../utils/fetch";
 
 const FieldEnum = {
     FREE: 0,
@@ -31,8 +32,6 @@ class Field extends React.Component {
     }
 
     componentDidMount() {
-        this.url = getApiUrl();
-        this.wsUrl = getWebsocketUrl();
         this.connectWebSocket();
     }
 
@@ -47,7 +46,7 @@ class Field extends React.Component {
     }
 
     connectWebSocket() {
-        this.ws = new WebSocket(this.wsUrl + "/websocket");
+        this.ws = new WebSocket(`${getWebsocketUrl()}/websocket`);
 
         this.ws.onopen = () => {
             console.log('connected');
@@ -101,7 +100,7 @@ class Field extends React.Component {
     }
 
     fetchField() {
-        fetch(`${this.url}/game/field`)
+        fetchInternal(`${getApiUrl()}/game/field`)
             .then(res => res.json())
             .then((data) => {
                 if (data) {
@@ -168,7 +167,7 @@ class Field extends React.Component {
                         <th className="TableSeparator">strategy</th>
                         <th className="TableSeparator">health</th>
                         <th className="TableSeparator">standing</th>
-                        <th></th>
+                        <th/>
                     </tr>
                     </thead>
                     <tbody>

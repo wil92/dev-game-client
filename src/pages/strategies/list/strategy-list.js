@@ -1,37 +1,14 @@
 import React from 'react';
+import {connect} from "react-redux";
 
 import './strategy-list.css';
 import '../../../common.css';
 import Toolbar from "../../../components/toolbar/Toolbar";
-import {loadUserData} from "../../../utils/user-data";
-import {getApiUrl} from "../../../utils/urls";
+import {activateStrategy, fetchStrategies} from "../../../redux/strategies/actions";
 
 class StrategyList extends React.Component {
     componentDidMount() {
-        this.url = getApiUrl();
-        this.fetchStrategies();
-    }
-
-    activateStrategy(id) {
-        fetch(`${this.url}/strategies/${id}/activate`, {
-            method: 'POST',
-            headers: {"Authorization": `Bearer ${loadUserData().token}`}
-        })
-            .then(() => {
-                this.fetchStrategies();
-            })
-            .catch(console.log);
-    }
-
-    fetchStrategies() {
-        fetch(`${this.url}/strategies`, {headers: {"Authorization": `Bearer ${loadUserData().token}`}})
-            .then(res => res.json())
-            .then((strategies) => {
-                if (strategies) {
-                    this.setState({strategies});
-                }
-            })
-            .catch(console.log);
+        this.props.fetchStrategies();
     }
 
     editStrategy(id) {
@@ -43,7 +20,7 @@ class StrategyList extends React.Component {
     }
 
     enableNewStrategyButton() {
-        return this.state?.strategies.length < 5;
+        return this.props?.strategies?.length < 5;
     }
 
     render() {
@@ -66,14 +43,14 @@ class StrategyList extends React.Component {
                         </tr>
                         </thead>
                         <tbody>
-                        {(this.state?.strategies || []).map((strategy, index) => (
+                        {(this.props?.strategies || []).map((strategy, index) => (
                             <tr key={index}>
                                 <td>{strategy.name}</td>
                                 <td>{strategy.valid ? "VALID" : "INVALID"}</td>
                                 <td>{strategy.active ? "ACTIVE" : ""}</td>
                                 <td>
                                     <button onClick={() => this.editStrategy(strategy._id)}>edit</button>
-                                    <button onClick={() => this.activateStrategy(strategy._id)}>activate</button>
+                                    <button onClick={() => this.props.activateStrategy(strategy._id)}>activate</button>
                                 </td>
                             </tr>
                         ))}
@@ -85,4 +62,6 @@ class StrategyList extends React.Component {
     }
 }
 
-export default StrategyList;
+const mapStateToProps = state => ({strategies: state?.strategies?.list});
+
+export default connect(mapStateToProps, {fetchStrategies, activateStrategy})(StrategyList);

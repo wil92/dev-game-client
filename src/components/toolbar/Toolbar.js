@@ -31,6 +31,6 @@ class Toolbar extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({isAuth: Boolean(state?.token)});
+const mapStateToProps = state => ({isAuth: Boolean(state?.auth?.token)});
 
 export default connect(mapStateToProps)(Toolbar);

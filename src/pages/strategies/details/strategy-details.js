@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactJson from "react-json-view";
+import {connect} from "react-redux";
 
 import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
@@ -8,9 +10,14 @@ import "ace-builds/src-noconflict/ext-language_tools";
 import './strategy-details.css';
 import '../../../common.css';
 import Toolbar from "../../../components/toolbar/Toolbar";
-import {loadUserData} from "../../../utils/user-data";
-import {getApiUrl} from "../../../utils/urls";
-import ReactJson from "react-json-view";
+
+import {
+    createStrategy, editStrategy,
+    fetchStrategy,
+    loadDummyCode,
+    setCode,
+    validateStrategy
+} from "../../../redux/strategies/actions";
 
 const EvalEnum = {
     OK: 0,
@@ -21,106 +28,29 @@ const EvalEnum = {
 
 class StrategyDetails extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {name: ''};
-    }
-
-
     componentDidMount() {
-        this.setState({id: this.props.match.params.id, name: "", code: ""});
-        this.url = getApiUrl();
         if (this.props.match?.params?.id) {
-            this.loadStrategy(this.props.match.params.id);
+            this.setState({id: this.props.match.params.id});
+            this.props.fetchStrategy(this.props.match.params.id);
         } else {
-            this.loadDummyCode();
+            this.props.loadDummyCode();
         }
-    }
-
-    loadStrategy(id) {
-        const userData = loadUserData();
-        fetch(`${this.url}/strategies/${id}`, {headers: {"Authorization": `Bearer ${userData.token}`}})
-            .then(res => res.json())
-            .then((code) => {
-                if (code) {
-                    this.setState({...code});
-                }
-            })
-            .catch(console.log);
-    }
-
-    loadDummyCode() {
-        const userData = loadUserData();
-        fetch(`${this.url}/strategies/dummy`, {headers: {"Authorization": `Bearer ${userData.token}`}})
-            .then(res => res.json())
-            .then((code) => {
-                if (code) {
-                    this.setState({...code});
-                }
-            })
-            .catch(console.log);
     }
 
     onChange(code) {
-        this.setState({code});
+        this.props.setCode({code: code});
     }
 
-    validateStrategy() {
-        const userData = loadUserData();
-        const options = {
-            method: "POST",
-            headers: {"Authorization": `Bearer ${userData.token}`, 'Content-Type': 'application/json'},
-            body: JSON.stringify({code: this.state.code})
-        };
-        fetch(`${this.url}/strategies/test`, options)
-            .then(res => res.json())
-            .then((data) => {
-                if (data) {
-                    this.setState({
-                        valid: data.status,
-                        averageTime: data.result?.averageTime,
-                        totalTime: data.result?.totalTime,
-                        result: data.result
-                    });
-                }
-            })
-            .catch(console.log);
+    onChangeName(event) {
+        this.props.setCode({name: event.target.value});
     }
 
     saveStrategy() {
-        const options = {
-            method: "POST",
-            headers: {"Authorization": `Bearer ${loadUserData().token}`, 'Content-Type': 'application/json'},
-            body: JSON.stringify({code: this.state.code, name: this.state.name})
-        };
         if (this.state.id) {
-            this.editStrategy(options);
+            this.props.editStrategy(this.state.id);
         } else {
-            this.createStrategy(options);
+            this.props.createStrategy(this.props.history);
         }
-    }
-
-    editStrategy(options) {
-        fetch(`${this.url}/strategies/${this.state.id}`, options)
-            .then(res => res.json())
-            .then((strategy) => {
-                if (strategy) {
-                    this.setState({code: strategy.code, name: strategy.name});
-                }
-            })
-            .catch(console.log);
-    }
-
-    createStrategy(options) {
-        fetch(`${this.url}/strategies`, options)
-            .then(res => res.json())
-            .then((strategy) => {
-                if (strategy) {
-                    this.props.history.replace(`/strategy/edit/${strategy.id}`, this.state);
-                }
-            })
-            .catch(console.log);
     }
 
     statusTitle(status) {
@@ -138,17 +68,6 @@ class StrategyDetails extends React.Component {
         }
     }
 
-    toMilliseconds(nanoseconds) {
-        if (nanoseconds) {
-            return `${Math.round(nanoseconds / 10) / 100} milliseconds`;
-        }
-        return '';
-    }
-
-    onChangeName(event) {
-        this.setState({name: event.target.value});
-    }
-
     render() {
         return (
             <div className="Page">
@@ -156,11 +75,11 @@ class StrategyDetails extends React.Component {
                 <div className="PageContent PageContentDetails">
                     <div className="DataContainer">
                         <div className="ActionsContainer">
-                            <input type="text" placeholder="Strategy Name" value={this.state?.name}
+                            <input type="text" placeholder="Strategy Name" value={this.props?.name}
                                    onChange={this.onChangeName.bind(this)}/>
                             <div className="Separator"/>
                             <button onClick={this.saveStrategy.bind(this)}>Save</button>
-                            <button onClick={this.validateStrategy.bind(this)}>Validate</button>
+                            <button onClick={this.props.validateStrategy}>Validate</button>
                         </div>
                         <AceEditor
                             placeholder="Placeholder Text"
@@ -173,18 +92,18 @@ class StrategyDetails extends React.Component {
                             showPrintMargin={true}
                             showGutter={true}
                             highlightActiveLine={true}
-                            value={this.state?.code}
+                            value={this.props?.code}
                             setOptions={{
                                 enableBasicAutocompletion: true,
                                 enableLiveAutocompletion: true,
                                 showLineNumbers: true,
                                 tabSize: 2,
                             }}/>
-                        <div style={{textAlign: "left", fontSize: "1rem"}}>
-                            <p>status: {this.statusTitle(this.state?.valid)}</p>
-                            <p>average time: {this.toMilliseconds(this.state?.averageTime)}</p>
-                            <p>total time: {this.toMilliseconds(this.state?.totalTime)}</p>
-                            {this.state.result && <ReactJson src={this.state.result} theme="solarized"/>}
+                        <div className="StatusContainer">
+                            {this.props?.result?.status !== undefined &&
+                            <p>status: {this.statusTitle(this.props?.result?.status)}</p>}
+                            {this.props?.result?.result &&
+                            <ReactJson src={this.props.result.result} theme="solarized"/>}
                         </div>
                     </div>
                 </div>
@@ -193,4 +112,17 @@ class StrategyDetails extends React.Component {
     }
 }
 
-export default StrategyDetails;
+const mapStateToProps = state => ({
+    code: state?.strategies?.code?.code,
+    name: state?.strategies?.code?.name,
+    result: state?.strategies?.result
+});
+
+export default connect(mapStateToProps, {
+    loadDummyCode,
+    setCode,
+    validateStrategy,
+    createStrategy,
+    fetchStrategy,
+    editStrategy
+})(StrategyDetails);

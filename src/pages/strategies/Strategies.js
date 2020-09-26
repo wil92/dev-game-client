@@ -21,6 +21,6 @@ function Strategies(props) {
     );
 }
 
-const mapStateToProps = state => ({isAuth: Boolean(state?.token)});
+const mapStateToProps = state => ({isAuth: Boolean(state?.auth?.token)});
 
 export default connect(mapStateToProps)(Strategies);

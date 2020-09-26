@@ -85,6 +85,6 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({...state, isAuth: Boolean(state?.token)});
+const mapStateToProps = state => ({isAuth: Boolean(state?.auth?.token)});
 
 export default connect(mapStateToProps, {logInAction, logOutAction})(Login);
