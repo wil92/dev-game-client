@@ -47,7 +47,7 @@ class StrategyDetails extends React.Component {
     }
 
     saveStrategy() {
-        if (this.state.id) {
+        if (this.state?.id) {
             this.props.editStrategy(this.state.id);
         } else {
             this.props.createStrategy(this.props.history);
