@@ -65,7 +65,7 @@ export function editStrategy(id) {
         return fetchInternal(`${getApiUrl()}/strategies/${id}`,
             {
                 method: 'POST',
-                headers: {"Authorization": `Bearer ${loadUserData().token}`},
+                headers: {"Authorization": `Bearer ${loadUserData().token}`, 'Content-Type': 'application/json'},
                 body: JSON.stringify({code: code.code, name: code.name})
             })
             .then(req => req.json())
