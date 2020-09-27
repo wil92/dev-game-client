@@ -17,3 +17,7 @@
     flex-direction: column;
     justify-content: center;
 }
+
+.PageContentTop {
+    justify-content: flex-start;
+}

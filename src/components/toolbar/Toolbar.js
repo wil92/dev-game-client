@@ -15,6 +15,11 @@ class Toolbar extends React.Component {
                     </Link>
                 </div>
                 <div className="Separator"/>
+                <div>
+                    <Link className="Button" to="/users">
+                        <div className="ButtonContainer"><span className="ButtonText">{"<Users>"}</span></div>
+                    </Link>
+                </div>
                 {this.props.isAuth && <div>
                     <Link className="Button" to="/strategy">
                         <div className="ButtonContainer"><span className="ButtonText">{"{Codes}"}</span></div>

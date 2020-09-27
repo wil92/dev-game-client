@@ -10,6 +10,7 @@ import Game from "./pages/game/Game";
 import Strategies from "./pages/strategies/Strategies";
 import Help from "./pages/help/Help";
 import store from "./redux/store";
+import Users from "./pages/standing/Users";
 
 const routing = (
     <Provider store={store}>
@@ -18,6 +19,7 @@ const routing = (
                 <Route exact path="/" component={Game}/>
                 <Route path="/help" component={Help}/>
                 <Route path="/strategy" component={Strategies}/>
+                <Route path="/users" component={Users}/>
             </Switch>
         </BrowserRouter>
     </Provider>

@@ -1,7 +1,3 @@
-.PageContentLocal {
-    justify-content: flex-start;
-}
-
 .ActionContainer {
     margin: 20px;
     display: flex;
@@ -12,4 +8,5 @@
 
 .Table {
     margin: 20px;
+    font-size: 1rem;
 }

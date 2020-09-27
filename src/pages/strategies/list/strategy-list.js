@@ -27,7 +27,7 @@ class StrategyList extends React.Component {
         return (
             <div className="Page">
                 <Toolbar history={this.props?.history}/>
-                <div className="PageContent PageContentLocal">
+                <div className="PageContent PageContentTop">
                     <div className="ActionContainer">
                         {this.enableNewStrategyButton() && <button onClick={this.newStrategy.bind(this)}>
                             new strategy
@@ -38,7 +38,7 @@ class StrategyList extends React.Component {
                         <tr>
                             <th>Name</th>
                             <th>Validation</th>
-                            <th>Active</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
