@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Route, Switch, BrowserRouter} from 'react-router-dom';
+import {Route, BrowserRouter} from 'react-router-dom';
 import {createBrowserHistory} from "history";
 import {Provider} from "react-redux";
 
@@ -11,16 +11,18 @@ import Strategies from "./pages/strategies/Strategies";
 import Help from "./pages/help/Help";
 import store from "./redux/store";
 import Users from "./pages/standing/Users";
+import GlobalHistory from "./pages/Spy";
 
 const routing = (
     <Provider store={store}>
         <BrowserRouter history={createBrowserHistory()}>
-            <Switch>
+            <div>
+                <GlobalHistory/>
                 <Route exact path="/" component={Game}/>
                 <Route path="/help" component={Help}/>
                 <Route path="/strategy" component={Strategies}/>
                 <Route path="/users" component={Users}/>
-            </Switch>
+            </div>
         </BrowserRouter>
     </Provider>
 )

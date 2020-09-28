@@ -18,7 +18,6 @@ class Help extends React.Component {
         fetch(`/help-en.md`)
             .then(help => help.text())
             .then((help) => {
-                console.log(help);
                 if (help) {
                     this.setState({help})
                 }
