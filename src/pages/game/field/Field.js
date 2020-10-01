@@ -122,6 +122,11 @@ class Field extends React.Component {
             this.context.stroke();
             this.context.fill();
 
+            if (!!player.id) {
+                this.context.font = "13px sans-serif";
+                this.context.fillText(player.username, xpos, ypos - radius / 2);
+            }
+
             if (this.state?.selected === player.id) {
                 const markRadius = this.rowSize * 1.5;
                 this.context.beginPath();
