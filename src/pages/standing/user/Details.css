@@ -1,0 +1,18 @@
+.UserDetailsContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.DetailsStyle {
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+    margin: 20px;
+    font-size: 1.1rem;
+}
+
+.GraphStyle {
+    margin: 20px;
+}

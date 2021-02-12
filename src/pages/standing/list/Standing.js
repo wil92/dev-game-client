@@ -28,7 +28,7 @@ class Standing extends React.Component {
                             <th>Win Games (W)</th>
                             <th>W/G</th>
                             <th>Points</th>
-                            {/*<th>Actions</th>*/}
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,9 +40,9 @@ class Standing extends React.Component {
                                 <td>{user.wins}</td>
                                 <td>{user.total > 0 ? Math.round(user.wins / user.total * 100) / 100 : 0}</td>
                                 <td>{Math.round(user.points)}</td>
-                                {/*<td>*/}
-                                {/*    <button onClick={() => this.openUserDetails(user.username)}>details</button>*/}
-                                {/*</td>*/}
+                                <td>
+                                    <button onClick={() => this.openUserDetails(user.username)}>details</button>
+                                </td>
                             </tr>
                         ))}
                         </tbody>

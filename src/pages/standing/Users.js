@@ -10,7 +10,7 @@ function Strategies(props) {
     return (
         <Router history={props.history}>
             <Route path={`${match.path}/`} exact={true} component={Standing}/>
-            <Route path={`${match.path}/:id`} component={Details}/>
+            <Route path={`${match.path}/:username`} component={Details}/>
         </Router>
     );
 }
