@@ -2,4 +2,12 @@
 
 Game from and for developer
 
-toDo
+## Docker project
+
+[dev-game-docker](https://github.com/wil92/dev-game-docker)
+
+## Start project
+
+```
+npm start
+```
