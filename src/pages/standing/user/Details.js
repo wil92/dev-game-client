@@ -47,8 +47,11 @@ class Details extends React.Component {
 const mapStateToProps = state => ({
     user: state.users.user,
     points: (state.users.points || [])
-        .map(point => ({y: point.value, x: new Date(point.createdAt), label: moment(point.createdAt).format('lll')}))
-        .filter((v, i) => i > state.users.points.length - 30)
+        .map(point => ({
+            y: Math.round(point.value * 100) / 100,
+            x: new Date(point.createdAt),
+            label: moment(point.createdAt).format('lll')
+        }))
 });
 
 export default connect(mapStateToProps, {fetchUser})(Details);

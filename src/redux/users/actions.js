@@ -32,7 +32,7 @@ export function fetchPointsByUser(userId) {
     return (dispatch) => {
         return fetchInternal(`${getApiUrl()}/users/points/${userId}`, {})
             .then(res => res.json())
-            .then(points => dispatch({type: UsersEnum.FETCH_USER_POINTS, points}))
+            .then(points => dispatch({type: UsersEnum.FETCH_USER_POINTS, points: points.reverse()}))
             .catch(console.log);
     };
 }
