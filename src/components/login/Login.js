@@ -6,9 +6,6 @@ import {connect} from "react-redux";
 import {logInAction, logOutAction} from "../../redux/auth/actions"
 import {getApiUrl} from "../../utils/urls";
 
-const LOGIN_TITLE = 'Login';
-const LOGOUT_TITLE = 'Logout';
-
 class Login extends React.Component {
 
     componentDidMount() {
@@ -71,7 +68,7 @@ class Login extends React.Component {
         return (
             <div className="LoginContainer">
                 <button className="LoginButton"
-                        onClick={this.buttonLoginLogout.bind(this)}>{this.props.isAuth ? LOGOUT_TITLE : LOGIN_TITLE}</button>
+                        onClick={this.buttonLoginLogout.bind(this)}>{this.props.isAuth ? this.props?.i18n['bannerLogOutButton'] : this.props?.i18n['bannerLogInButton']}</button>
                 <div className={this.state?.dialogClass} onClick={this.closeDialog.bind(this)}>
                     <div className="Dialog" onClick={this.stopPropagation.bind(this)}>
                         <div className="DialogHead">Login in dev-game</div>
@@ -85,6 +82,6 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({isAuth: Boolean(state?.auth?.token)});
+const mapStateToProps = state => ({isAuth: Boolean(state?.auth?.token), i18n: state?.i18n?.i18n});
 
 export default connect(mapStateToProps, {logInAction, logOutAction})(Login);

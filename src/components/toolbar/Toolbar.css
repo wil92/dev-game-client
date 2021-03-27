@@ -12,7 +12,7 @@
 
 .Button {
     height: 35px;
-    width: 80px;
+    min-width: 80px;
     margin: 8px;
     background-color: #64a07c;
     border: none;
@@ -40,4 +40,7 @@
 
 .Button:hover {
     background-color: #4b7d5f;
+}
+
+.LanguageContainer {
 }
