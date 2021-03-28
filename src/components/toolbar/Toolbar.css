@@ -1,6 +1,6 @@
 .Toolbar {
     width: 100vw;
-    height: 50px;
+    min-height: 50px;
     background-color: #191a1d;
     display: flex;
     flex-direction: row;
@@ -8,6 +8,26 @@
 
 .Separator {
     flex: 100%;
+}
+
+@media screen and (max-width: 767px) {
+    .Toolbar {
+        flex-wrap: wrap;
+    }
+
+    .ButtonsContainer {
+        max-width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
+.MainContainer {
+    display: flex;
+    flex: 100%;
+}
+
+.ButtonsContainer {
+    display: flex;
 }
 
 .Button {
@@ -40,7 +60,4 @@
 
 .Button:hover {
     background-color: #4b7d5f;
-}
-
-.LanguageContainer {
 }

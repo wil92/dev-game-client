@@ -15,36 +15,40 @@ class Toolbar extends React.Component {
     render() {
         return (
             <div className="Toolbar">
-                <div>
-                    <Link className="Button" to="/">
-                        <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerGameButton']}</span></div>
-                    </Link>
+                <div className="MainContainer">
+                    <div>
+                        <Link className="Button" to="/">
+                            <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerGameButton']}</span></div>
+                        </Link>
+                    </div>
+                    <div className="Separator"/>
+                    <div className="LanguageContainer">
+                        <select value={this.props?.language} onChange={this.languageChange.bind(this)}>
+                            {allowLanguage.map((lang) => (
+                                <option key={lang}
+                                        value={lang}>{lang}</option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
-                <div className="Separator"/>
-                <div className="LanguageContainer">
-                    <select value={this.props?.language} onChange={this.languageChange.bind(this)}>
-                        {allowLanguage.map((lang) => (
-                            <option key={lang}
-                                    value={lang}>{lang}</option>
-                        ))}
-                    </select>
+                <div className="ButtonsContainer">
+                    <div>
+                        <Link className="Button" to="/users">
+                            <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerUsersButton']}</span></div>
+                        </Link>
+                    </div>
+                    {this.props.isAuth && <div>
+                        <Link className="Button" to="/strategy">
+                            <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerCodesButton']}</span></div>
+                        </Link>
+                    </div>}
+                    <div>
+                        <Link className="Button" to="/help">
+                            <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerHelpButton']}</span></div>
+                        </Link>
+                    </div>
+                    <div className="Login"><Login history={this.props?.history}/></div>
                 </div>
-                <div>
-                    <Link className="Button" to="/users">
-                        <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerUsersButton']}</span></div>
-                    </Link>
-                </div>
-                {this.props.isAuth && <div>
-                    <Link className="Button" to="/strategy">
-                        <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerCodesButton']}</span></div>
-                    </Link>
-                </div>}
-                <div>
-                    <Link className="Button" to="/help">
-                        <div className="ButtonContainer"><span className="ButtonText">{this.props?.i18n['bannerHelpButton']}</span></div>
-                    </Link>
-                </div>
-                <div className="Login"><Login history={this.props?.history}/></div>
             </div>
         );
     }

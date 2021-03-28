@@ -1,4 +1,10 @@
+.TableContent {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
 .Table {
+    width: calc(100% - 40px);
     margin: 20px;
     font-size: 1rem;
 }

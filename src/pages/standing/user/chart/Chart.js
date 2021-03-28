@@ -46,7 +46,10 @@ class LineChart extends React.Component {
 
     render() {
         return (
-            <canvas ref={this.chartRef} width={600} height={300}/>
+            <canvas className="Canvas"
+                    ref={this.chartRef}
+                    width={600}
+                    height={300}/>
         );
     }
 }
