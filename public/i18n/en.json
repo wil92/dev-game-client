@@ -4,5 +4,54 @@
   "bannerCodesButton": "{Codes}",
   "bannerHelpButton": "¿Help?",
   "bannerLogOutButton": "LogOut",
-  "bannerLogInButton": "LogIn"
+  "bannerLogInButton": "LogIn",
+
+  "loginModalTitle": "Login in dev-game",
+
+  "standingTable": {
+    "position": "Position",
+    "username": "Username",
+    "totalGames": "Total Games (G)",
+    "winGames": "Win Games (W)",
+    "ratio": "W/G",
+    "points": "Points",
+    "actions": "Actions",
+
+    "detailsButton": "details"
+  },
+
+  "userDetails": {
+    "username": "Username:",
+    "winGames": "Wins Games:",
+    "totalGames": "Total Games:",
+    "points": "Points:",
+
+    "chartTitle": "Points"
+  },
+
+  "strategiesList": {
+    "name": "Name",
+    "validation": "Validation",
+    "status": "Status",
+    "actions": "Actions",
+
+    "validStatus": "VALID",
+    "invalidStatus": "INVALID",
+    "activeStatus": "ACTIVE",
+
+    "newStrategyButton": "new strategy",
+    "editButton": "edit",
+    "activateButton": "activate"
+  },
+
+  "gameField": {
+    "table": {
+      "user": "user",
+      "strategy": "strategy",
+      "health": "health",
+      "standing": "standing",
+
+      "aliveStatus": "ALIVE"
+    }
+  }
 }

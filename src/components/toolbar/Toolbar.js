@@ -24,7 +24,8 @@ class Toolbar extends React.Component {
                 <div className="LanguageContainer">
                     <select value={this.props?.language} onChange={this.languageChange.bind(this)}>
                         {allowLanguage.map((lang) => (
-                            <option value={lang}>{lang}</option>
+                            <option key={lang}
+                                    value={lang}>{lang}</option>
                         ))}
                     </select>
                 </div>

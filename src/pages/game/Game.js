@@ -28,7 +28,7 @@ class Game extends React.Component {
         this.field.current.setState({
             height: currentSize,
             width: currentSize
-        })
+        });
     }
 
     render() {

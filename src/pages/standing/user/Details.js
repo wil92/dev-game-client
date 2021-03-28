@@ -29,13 +29,14 @@ class Details extends React.Component {
                 <div className="PageContent">
                     <div className="UserDetailsContainer">
                         <div className="DetailsStyle">
-                            <span>Username: {this.props?.user?.username || ''}</span>
-                            <span>Wins Games: {this.props?.user?.wins || ''}</span>
-                            <span>Total Games: {this.props?.user?.total || ''}</span>
-                            <span>Points: {this.formatNumber(this.props?.user?.points)}</span>
+                            <span>{this.props?.i18n?.userDetails?.username} {this.props?.user?.username || ''}</span>
+                            <span>{this.props?.i18n?.userDetails?.winGames} {this.props?.user?.wins || ''}</span>
+                            <span>{this.props?.i18n?.userDetails?.totalGames} {this.props?.user?.total || ''}</span>
+                            <span>{this.props?.i18n?.userDetails?.points} {this.formatNumber(this.props?.user?.points)}</span>
                         </div>
                         <div className="GraphStyle">
-                            <LineChart data={this.props.points} title="Points"/>
+                            <LineChart data={this.props.points}
+                                       title="Points"/>
                         </div>
                     </div>
                 </div>
@@ -51,7 +52,8 @@ const mapStateToProps = state => ({
             y: Math.round(point.value * 100) / 100,
             x: new Date(point.createdAt),
             label: moment(point.createdAt).format('lll')
-        }))
+        })),
+    i18n: state?.i18n?.i18n
 });
 
 export default connect(mapStateToProps, {fetchUser})(Details);

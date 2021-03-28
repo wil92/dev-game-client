@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 
 import './Field.css';
 import {getApiUrl, getWebsocketUrl} from "../../../utils/urls";
@@ -168,10 +169,10 @@ class Field extends React.Component {
                 <table className="StandingTable">
                     <thead>
                     <tr>
-                        <th className="TableSeparator">user</th>
-                        <th className="TableSeparator">strategy</th>
-                        <th className="TableSeparator">health</th>
-                        <th className="TableSeparator">standing</th>
+                        <th className="TableSeparator">{this.props?.i18n?.gameField?.table?.user}</th>
+                        <th className="TableSeparator">{this.props?.i18n?.gameField?.table?.strategy}</th>
+                        <th className="TableSeparator">{this.props?.i18n?.gameField?.table?.health}</th>
+                        <th className="TableSeparator">{this.props?.i18n?.gameField?.table?.standing}</th>
                         <th/>
                     </tr>
                     </thead>
@@ -182,7 +183,7 @@ class Field extends React.Component {
                             <td className="TableSeparator">{strategy?.username}</td>
                             <td className="TableSeparator">{strategy?.name}</td>
                             <td className="TableSeparator">{strategy?.health}</td>
-                            <td className="TableSeparator">{strategy?.standing || 'ALIVE'}</td>
+                            <td className="TableSeparator">{strategy?.standing || this.props?.i18n?.gameField?.table?.aliveStatus}</td>
                             <td><input type="radio" checked={strategy.id === this.state.selected} readOnly/></td>
                         </tr>
                     ))}
@@ -193,4 +194,6 @@ class Field extends React.Component {
     }
 }
 
-export default Field;
+const mapStateToProps = state => ({i18n: state?.i18n?.i18n});
+
+export default connect(mapStateToProps, null, null, {forwardRef: true})(Field);

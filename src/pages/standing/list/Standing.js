@@ -22,13 +22,13 @@ class Standing extends React.Component {
                     <table className="Table">
                         <thead>
                         <tr>
-                            <th>Position</th>
-                            <th>Username</th>
-                            <th>Total Games (G)</th>
-                            <th>Win Games (W)</th>
-                            <th>W/G</th>
-                            <th>Points</th>
-                            <th>Actions</th>
+                            <th>{this.props?.i18n?.standingTable?.position}</th>
+                            <th>{this.props?.i18n?.standingTable?.username}</th>
+                            <th>{this.props?.i18n?.standingTable?.totalGames}</th>
+                            <th>{this.props?.i18n?.standingTable?.winGames}</th>
+                            <th>{this.props?.i18n?.standingTable?.ratio}</th>
+                            <th>{this.props?.i18n?.standingTable?.points}</th>
+                            <th>{this.props?.i18n?.standingTable?.actions}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -41,7 +41,7 @@ class Standing extends React.Component {
                                 <td>{user.total > 0 ? Math.round(user.wins / user.total * 100) / 100 : 0}</td>
                                 <td>{Math.round(user.points)}</td>
                                 <td>
-                                    <button onClick={() => this.openUserDetails(user.username)}>details</button>
+                                    <button onClick={() => this.openUserDetails(user.username)}>{this.props?.i18n?.standingTable?.detailsButton}</button>
                                 </td>
                             </tr>
                         ))}
@@ -53,6 +53,6 @@ class Standing extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({users: state?.users?.list});
+const mapStateToProps = state => ({users: state?.users?.list, i18n: state?.i18n?.i18n});
 
 export default connect(mapStateToProps, {fetchUsers})(Standing);

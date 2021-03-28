@@ -69,11 +69,14 @@ class Login extends React.Component {
             <div className="LoginContainer">
                 <button className="LoginButton"
                         onClick={this.buttonLoginLogout.bind(this)}>{this.props.isAuth ? this.props?.i18n['bannerLogOutButton'] : this.props?.i18n['bannerLogInButton']}</button>
-                <div className={this.state?.dialogClass} onClick={this.closeDialog.bind(this)}>
-                    <div className="Dialog" onClick={this.stopPropagation.bind(this)}>
-                        <div className="DialogHead">Login in dev-game</div>
+                <div className={this.state?.dialogClass}
+                     onClick={this.closeDialog.bind(this)}>
+                    <div className="Dialog"
+                         onClick={this.stopPropagation.bind(this)}>
+                        <div className="DialogHead">{this.props?.i18n['loginModalTitle']}</div>
                         <div className="DialogBody">
-                            <button className="ButtonGithub" onClick={this.login.bind(this)}>Github</button>
+                            <button className="ButtonGithub"
+                                    onClick={this.login.bind(this)}>Github</button>
                         </div>
                     </div>
                 </div>

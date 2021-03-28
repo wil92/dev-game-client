@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from "react-redux";
 import ReactMarkdown from "react-markdown";
 
 import './Help.css';
@@ -10,19 +11,29 @@ class Help extends React.Component {
 
     componentDidMount() {
         this.url = getApiUrl();
+        this.lang = null;
+    }
 
-        this.fetchHelpText();
+    componentDidUpdate(prevProps) {
+        // console.log('AAA', this.props?.i18n, pre);
+        if (this.props?.language !== this.lang) {
+            // console.log('aaa', this.props?.language)
+            this.lang = this.props?.language;
+            this.fetchHelpText();
+        }
     }
 
     fetchHelpText() {
-        fetch(`/help-en.md`)
-            .then(help => help.text())
-            .then((help) => {
-                if (help) {
-                    this.setState({help})
-                }
-            })
-            .catch(console.log)
+        if (this.lang) {
+            fetch(`/help/${this.lang}.md`)
+                .then(help => help.text())
+                .then((help) => {
+                    if (help) {
+                        this.setState({help})
+                    }
+                })
+                .catch(console.log);
+        }
     }
 
     render() {
@@ -37,4 +48,6 @@ class Help extends React.Component {
     }
 }
 
-export default Help;
+const mapStateToProps = state => ({language: state?.i18n?.language});
+
+export default connect(mapStateToProps)(Help);

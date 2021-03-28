@@ -121,7 +121,8 @@ class StrategyDetails extends React.Component {
 const mapStateToProps = state => ({
     code: state?.strategies?.code?.code,
     name: state?.strategies?.code?.name,
-    result: state?.strategies?.result
+    result: state?.strategies?.result,
+    i18n: state?.i18n?.i18n
 });
 
 export default connect(mapStateToProps, {

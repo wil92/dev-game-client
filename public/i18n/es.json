@@ -4,5 +4,54 @@
   "bannerCodesButton": "{Estratégias}",
   "bannerHelpButton": "¿Ayuda?",
   "bannerLogOutButton": "LogOut",
-  "bannerLogInButton": "LogIn"
+  "bannerLogInButton": "LogIn",
+
+  "loginModalTitle": "Autenticarse en dev-game",
+
+  "standingTable": {
+    "position": "Posición",
+    "username": "Usuario",
+    "totalGames": "Juegos Jugados (J)",
+    "winGames": "Juegos Ganados (G)",
+    "ratio": "G/J",
+    "points": "Puntos",
+    "actions": "Acciones",
+
+    "detailsButton": "detalles"
+  },
+
+  "userDetails": {
+    "username": "Usuario:",
+    "winGames": "Juegos Ganados:",
+    "totalGames": "Juegos Totales:",
+    "points": "Puntos:",
+
+    "chartTitle": "Puntos"
+  },
+
+  "strategiesList": {
+    "name": "Nombre",
+    "validation": "Validación",
+    "status": "Estado",
+    "actions": "Acciones",
+
+    "validStatus": "VÁLIDO",
+    "invalidStatus": "INVÁLIDO",
+    "activeStatus": "ACTIVO",
+
+    "newStrategyButton": "Nueva estratégia",
+    "editButton": "editar",
+    "activateButton": "activar"
+  },
+
+  "gameField": {
+    "table": {
+      "user": "usuario",
+      "strategy": "Estratégia",
+      "health": "Vida",
+      "standing": "posición",
+
+      "aliveStatus": "EN JUEGO"
+    }
+  }
 }
