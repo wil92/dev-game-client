@@ -9,7 +9,6 @@ export function defaultLanguage() {
     if (lang) {
         return lang;
     }
-    console.log('aaa', lang)
     lang = navigator?.language || navigator?.userLanguage;
     return allowLanguage.reduce((previousValue, currentValue) => {
         if (lang.toLowerCase().startsWith(currentValue)) {
