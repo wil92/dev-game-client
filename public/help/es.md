@@ -1,6 +1,7 @@
 # Dev Game
 
-Un juego por y para desarrolladores de software.
+Un juego por y para desarrolladores de software. El presente juego es totalmente opensource, por lo que pueden
+ encontrarlo en el siguiente enlace: [wil92/dev-game-docker](https://github.com/wil92/dev-game-docker)
 
 ## Descripción
 
@@ -69,37 +70,40 @@ Cada estratégia debe tener un método run() para calcular el siguiente movimien
  , existen funciones de ayuda, como es el caso de validMovements(), que retorna los movimientos válidos que la 
   estratégia puede jugar en la siguiente iteración.
 
-> Nota: se necesita 
-> Note: you need to be careful with the complexity of your code, because if your code takes longer than 150
-> milliseconds to calculate your next move, your strategy output is skipped.
+> Nota: Tener cuidado con la complejidad algorítmica del código, puesto que si al ejecutarse la estratégia, esta
+> tarda más de 150 milisegundos, automáticamente se detiene la ejecución de la misma y no se tiene en cuenta en esa
+> iteración.
 
-### Strategy input
+### Parámetros de entrada de la estratégia
 
 ```
 strategyInput: { vision, players, position, name, health, attack, velocity }
 ```
 
-- `vision: number[][]`: bidimentional array that contain the current vision area of the strategy
-- `players: {position: {x: number, y: number}, health: number, attack: number}[]`: array with all the information about
- the opponents strategies in the vision area
-- `position: {x: number, y: number}`: current position of the strategy in the vision area
-- `health: number`: current strategy health. Initially is 100
-- `attack: number`: current strategy attack. At the moment it is fixed and equals to 10.
-- `velocity: number`: current strategy max velocity. At the moment the max velocity is 2.
+- `vision: number[][]`: Arrego bidireccional que contiene el área de visión actual en que se encuentra la
+ estratégia.
+- `players: {position: {x: number, y: number}, health: number, attack: number}[]`: Arreglo que contiene toda la
+ información sobre las estratégias oponentes en el área de visión.
+- `position: {x: number, y: number}`: Actual posición de la estratégia en el área de visión.
+- `health: number`: Valor de la vida de la estratégia. Inicialmente es 100.
+- `attack: number`: Ataque de la estratégia. Este valor actualmente es 2.
+- `velocity: number`: Velocidad de la estratégia. Este valor actualmente es 2.
 
-### Strategy output
+### Formato de la respuesta de la estratégia
 
 ```
 { direction, velocity }
 ```
 
-- `(direction: number)`: based on the direction's image, this value will define the strategy move.
+- `(direction: number)`: Basado en la siguiente imágen, este valor debe determinar hacia donde se moverá la
+estratégia en la siguiente iteración
 
 ![logo](./directions.png)
 
-- `(velocity: number)`: the number of steps to make in the selected direction. It should be between `0` and `max velocity`
+- `(velocity: number)`: Determina el número de pasos que se moverá la estratégia en la dirección especificada. Este
+ valor debe ser entre `0` y `max velocity`
 
-### Helpers functions
+### Funciones de ayuda
 
 ```
 validMovements({vision: number[][], position: number, velocity: number}) : {direction: number, velocity: number}[]
@@ -109,26 +113,24 @@ transformMoveToPos(position: {x: number, y: number}, move: {direction: number, v
 transformPosToMove(position: {x: number, y: number}, nextPosition: {x: number, y: number}) : {direction: number, velocity: number} | null
 ```
 
-- `validMovements({vision, position, velocity})`: given the input values, return all the
- valid movements.
+- `validMovements({vision, position, velocity})`: Dados los valores de entrada, retorna todos los posibles
+ movimientos válidos que la estratégia puede realizar.
 
-- `validateMovement({vision, position, velocity, direction})`: given the map and the
- current position, return true or false if the given movement is valid or
- not.
+- `validateMovement({vision, position, velocity, direction})`: Dado el mapa y la posición actual de la estratégia
+, retorna true o false si el movimiento definido es válido o no.
 
-- `randomNumber(X)`: given a number `X`, the method return a random number between `0` and `X-1` 
+- `randomNumber(X)`: Dado el valor `X`, el método retorna un valor aleatorio entre `0` y `X-1` 
 
-- `transformMoveToPos(position, move)`: given the
- position of the user and the movement, the function return the position in the vision area in the format `{x: number
- , y: number}`.
+- `transformMoveToPos(position, move)`: A partir de la posición de la estratégia y el movimiento que se desea, la
+ función retorna la posición en que terminaría la estratégia en el área de visión con el formato `{x: number, y
+ : number}`. 
 
-- `transformPosToMove(position, nextPosition)`: given the initial
- position and the next position to move, the function return the movement need in the format `{direction
- : number, velocity: number}`.
+- `transformPosToMove(position, nextPosition)`: A partir de una posición origen y una posición destino, la función
+ retorna el movimiento necesario en el formato `{direction : number, velocity: number}`.
 
-### Enum values
+### Valores Enum
 
-You also have access to some enum values used in the field
+También se tiene acceso a algunos valores Enum de la aplicación
 
 ```
 FieldEnum.BLOCK = 0
